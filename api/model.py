@@ -216,10 +216,8 @@ def train(real_image_dataset,
         dis_optimizer: Discriminator optimizer.
         checkpoint: Checkpoint object.
         checkpoint_prefix: Checkpoint name prefix.
-
     """
-    # global real_dis_acc, fake_dis_acc, combined_dis_acc
-    start = time.time()
+    sum_execution_time = 0
 
     # Define TensorBoard loss metrics
     gen_loss_metric = keras.metrics.Mean('train_loss', dtype=tf.float32)
@@ -276,6 +274,27 @@ def train(real_image_dataset,
 
             gen_loss_metric.reset_states()
             dis_loss_metric.reset_states()
+
+            # TensorBoard Weights and Biases metric
+            with train_summary_writer.as_default():
+                with tf.name_scope('Generator'):
+                    with tf.name_scope('Weights'):
+                        for gen_layer in gen_model.layers:
+                            try:
+                                tf.summary.histogram(gen_layer.name, gen_layer.get_weights()[0], step=epoch)
+                            except Exception:
+                                pass
+
+                with tf.name_scope('Discriminator'):
+                    for dis_layer in dis_model.layers:
+                        try:
+                            with tf.name_scope('Weights'):
+                                tf.summary.histogram(dis_layer.name, dis_layer.get_weights()[0], step=epoch)
+                            with tf.name_scope('Biases'):
+                                tf.summary.histogram(dis_layer.name, dis_layer.get_weights()[1], step=epoch)
+                        except Exception:
+                            pass
+
             end_metrics = time.time()
             if DEBUG_LOG:
                 print("\tExecution time: {:.9f}s (summary/metrics)".format(end_metrics - start_metrics))
@@ -294,10 +313,18 @@ def train(real_image_dataset,
             if DEBUG_LOG:
                 print("\tExecution time: {:.9f}s (checkpoint.save)".format(end_ckpt - start_ckpt))
 
-        print('Time for epoch {} is {} sec'.format(epoch + 1, time.time() - start_epoch))
+        epoch_execution_time = time.time() - start_epoch
+        sum_execution_time += epoch_execution_time
+        print('Time for the epoch {} is {} sec'.format(epoch + 1, epoch_execution_time))
 
-    end = time.time()
-    print("Execution time: {:.9f}s (train)".format(end - start))
+        # Track execution time of each epoch in TensorBoard
+        with train_summary_writer.as_default():
+            with tf.name_scope('Execution time'):
+                tf.summary.scalar('Train epoch', epoch_execution_time, step=epoch)
+                tf.summary.scalar('Average epoch', (sum_execution_time / (epoch + 1)), step=epoch)
+                tf.summary.scalar('Sum epoch', sum_execution_time, step=epoch)
+
+    print("Execution time: {:.9f}s (train)".format(sum_execution_time))
 
 
 @tf.function
@@ -411,7 +438,10 @@ def save_image(gen_model,
         test_input: A Generated image.
     """
     start = time.time()
-    predictions = gen_model(test_input, training=False)
+
+    predictions = None
+    if (epoch % LC_GEN_SAMPLE_SAVE_INTERVAL == 0) or (epoch % TB_GEN_SAMPLE_SAVE_INTERVAL == 0):
+        predictions = gen_model(test_input, training=False)
 
     # Record image to local storage.
     if epoch % LC_GEN_SAMPLE_SAVE_INTERVAL == 0:
@@ -425,7 +455,8 @@ def save_image(gen_model,
         with tf.name_scope("Samples"):
             with train_summary_writer.as_default():
                 for i in range(predictions.shape[0]):
-                    img = np.reshape(predictions[i], (1, IMG_SHAPE[0], IMG_SHAPE[1], N_CHANNELS))
+                    img = np.array(np.array(predictions[i]) * 0.5 + 0.5).astype(np.float)
+                    img = np.reshape(img, (1, IMG_SHAPE[0], IMG_SHAPE[1], N_CHANNELS))
                     tf.summary.image('image_{:03d}.png'.format(i), img, step=epoch)
 
     end = time.time()

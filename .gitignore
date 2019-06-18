@@ -1,0 +1,7 @@
+.idea/
+__pycache__/
+
+/res/
+/logs/
+/dataset/
+/image_list.txt

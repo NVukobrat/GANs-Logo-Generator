@@ -13,7 +13,7 @@ BATCH_SIZE = 256
 
 # Last epoch during previous training (in case training
 # has continued from the checkpoint).
-LAST_EPOCH = 203780
+LAST_EPOCH = 0
 
 # How many epochs should train last.
 EPOCHS = 500000

@@ -3,9 +3,6 @@ from api import model
 from api.configuration import DATASET_PATH, LAST_EPOCH, EPOCHS
 
 
-# TODO: TensorBoard track avg execution time.
-# TODO: TensorBoard better images.
-# TODO: TensorBoard record weights and biases.
 def main():
     # Load dataset
     scene_dataset = dataset.load_normalized_dataset(DATASET_PATH)
