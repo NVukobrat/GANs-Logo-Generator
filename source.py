@@ -14,7 +14,7 @@ def main():
     dis_optimizer = model.discriminator_optimizer()
 
     # Define model checkpoint
-    checkpoint, checkpoint_prefix = model.define_checkpoint(gen_model, gen_optimizer, dis_model, dis_optimizer)
+    checkpoint, checkpoint_prefix = model.restore_checkpoint(gen_model, gen_optimizer, dis_model, dis_optimizer)
 
     # Initialize training pipeline.
     model.train(
