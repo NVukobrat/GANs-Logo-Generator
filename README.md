@@ -326,19 +326,19 @@ The dataset used for generating logo images comes from [Large Logo Dataset (LLD)
         <td>Discriminator on real images</td>
     </tr>
     <tr>
-        <td><img src="assets/images/case_1/discriminator_accuracy/Accuracy_Real Discriminator.svg" alt=""></td>
+        <td><img src="assets/images/case_1/discriminator_accuracy/Accuracy_Real Discriminator.png" alt=""></td>
     </tr>
     <tr>
         <td>Discriminator on fake images</td>
     </tr>
     <tr>
-        <td><img src="assets/images/case_1/discriminator_accuracy/Accuracy_Fake Discriminator.svg" alt=""></td>
+        <td><img src="assets/images/case_1/discriminator_accuracy/Accuracy_Fake Discriminator.png" alt=""></td>
     </tr>
     <tr>
         <td>Discriminator combined mean loss</td>
     </tr>
     <tr>
-        <td><img src="assets/images/case_1/discriminator_accuracy/Accuracy_Combined Discriminator.svg" alt=""></td>
+        <td><img src="assets/images/case_1/discriminator_accuracy/Accuracy_Combined Discriminator.png" alt=""></td>
     </tr>
 </table>
 
@@ -371,13 +371,13 @@ The dataset used for generating logo images comes from [Large Logo Dataset (LLD)
         <td>Generator Loss</td>
     </tr>
     <tr>
-        <td><img src="assets/images/case_1/loss/Loss_Generator.svg" alt=""></td>
+        <td><img src="assets/images/case_1/loss/Loss_Generator.png" alt=""></td>
     </tr>
     <tr>
     	<td>Discriminator Loss</td>
     </tr>
     <tr>
-        <td><img src="assets/images/case_1/loss/Loss_Discriminator.svg" alt=""></td>
+        <td><img src="assets/images/case_1/loss/Loss_Discriminator.png" alt=""></td>
     </tr>
 </table>
 
@@ -419,19 +419,19 @@ The dataset used for generating logo images comes from [Large Logo Dataset (LLD)
         <td>Sum epoch</td>
     </tr>
     <tr>
-        <td><img src="assets/images/case_1/execution_time/Execution time_Sum epoch.svg" alt=""></td>
+        <td><img src="assets/images/case_1/execution_time/Execution time_Sum epoch.png" alt=""></td>
     </tr>
     <tr>
     	<td>Average epoch</td>
     </tr>
     <tr>
-        <td><img src="assets/images/case_1/execution_time/Execution time_Average epoch.svg" alt=""></td>
+        <td><img src="assets/images/case_1/execution_time/Execution time_Average epoch.png" alt=""></td>
     </tr>
     <tr>
     	<td>Train epoch</td>
     </tr>
     <tr>
-        <td><img src="assets/images/case_1/execution_time/Execution time_Train epoch.svg" alt=""></td>
+        <td><img src="assets/images/case_1/execution_time/Execution time_Train epoch.png" alt=""></td>
     </tr>
 </table>
 
