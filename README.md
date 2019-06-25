@@ -1,4 +1,18 @@
 # Summary
+Creating logo images using Generative Adversarial Networks (GANs).
+
+This project uses GANs models to produce new logo images. It works by trying to mimic real-world images collected from the Wikipedia pages. More details about GANs are provided in the overview.
+
+Also, bellow is specified OS and Hardware elements used during this project R&D, explanation of the used dataset, results in section and analysis section. In the result section, most of the documentation consists of cases in which models were trained. Those cases consist of conclusions, generator samples on arbitrarily chosen epochs, and generator accuracy for that case. These cases are intended to give more intuition on how GANs tries to solve the given problem. In the analysis section, more details graphics are provided in order to get better intuition about what happening during the training process.
+
+## GANs overview
+Generative Adversarial Networks (GANs) belongs to the generative models. That means they are able to generate artificial content base on the arbitrary input.
+
+Generally, GANs most of the time refers to the training method, rather on the generative model. Reason for this is that GANs don't train a single network, but instead two networks simultaneously.
+
+The first network is usually called Generator, while the second Discriminator. Purpose of the Generator model is to images that look real. During training, the Generator progressively becomes better at creating images that look real. Purpose of the Discriminator model is to learn to tell real images apart from fakes. During training, the Discriminator progressively becomes better at telling fake images from real ones. The process reaches equilibrium when the Discriminator can no longer distinguish real images from fakes.
+
+This repo demonstrates how GANs work with simple generative and discriminative networks. The MNIST dataset represents is a reference for the generative model.
 
 ## Environment
 - **OS:** Ubuntu 19.04
@@ -348,6 +362,8 @@ This case uses a small part of the dataset that contains **100** logo samples. I
 
 Because of the very tiny dataset size, generator, in this case, overfits really fast. At 32.000 epoch, it already overfits and generates logo samples from the dataset. Till the end of the training, it keeps generating images too much similar to the training ones. Discriminator does very well in this case too, with almost 100% accuracy.
 
+In the generator results, only images till 201.000 epoch are shown. Rest of the samples are similar till 760.000 epochs.
+
 ### Generator Results
 <table>
 	<tr>
@@ -613,9 +629,6 @@ Because of the very tiny dataset size, generator, in this case, overfits really 
 		<td><img src="assets/images/case_2/generator_results/image_at_epoch_199000_00000.png" alt=""></td>
 		<td><img src="assets/images/case_2/generator_results/image_at_epoch_200000_00000.png" alt=""></td>
 		<td><img src="assets/images/case_2/generator_results/image_at_epoch_201000_00000.png" alt=""></td>
-	</tr>
-	<tr>
-		<td>Similar images continue till 750.000 epoch.</td>
 	</tr>
 </table>
 
