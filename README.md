@@ -12,8 +12,6 @@ Generally, GANs most of the time refers to the training method, rather on the ge
 
 The first network is usually called Generator, while the second Discriminator. Purpose of the Generator model is to images that look real. During training, the Generator progressively becomes better at creating images that look real. Purpose of the Discriminator model is to learn to tell real images apart from fakes. During training, the Discriminator progressively becomes better at telling fake images from real ones. The process reaches equilibrium when the Discriminator can no longer distinguish real images from fakes.
 
-This repo demonstrates how GANs work with simple generative and discriminative networks. The MNIST dataset represents is a reference for the generative model.
-
 ## Environment
 - **OS:** Ubuntu 19.04
 - **Processor:** Intel Core i7-4770 CPU @ 3.40GHz × 8
