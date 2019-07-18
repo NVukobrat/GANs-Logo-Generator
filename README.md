@@ -22,10 +22,54 @@ The first network is usually called Generator, while the second Discriminator. P
 ## Dataset
 The dataset used for generating logo images comes from [Large Logo Dataset (LLD)](https://data.vision.ee.ethz.ch/sagea/lld/). Concretely, from a [sample of 5.000 images](https://data.vision.ee.ethz.ch/sagea/lld/data/LLD-icon_sample.zip) in the PNG format. Shape of images is 32x32x3, where they represent Width, Height and Channels respectively. Images are collected from the Wikipedia descriptions by looking for favicon.ico sample.
 
-## Notes
-- The last **Case 3** is still in the training process. Presented results are only current results. This case will last at least 500.000 epoch. If it start to generate good results, this could be prolonged to even more epochs.
-
 # Results
+
+## Models Architecture
+Here is the architecture of the Generator model for the first 3 cases:
+
+```python
+model = keras.Sequential([
+        layers.Dense(units=7 * 7 * 256, use_bias=False, input_shape=(100,)),
+        layers.BatchNormalization(),
+        layers.LeakyReLU(),
+        layers.Reshape((7, 7, 256)),
+
+        layers.Conv2DTranspose(filters=128, kernel_size=(5, 5), strides=(1, 1), padding="same", use_bias=False),
+        layers.BatchNormalization(),
+        layers.LeakyReLU(),
+
+        layers.Conv2DTranspose(filters=64, kernel_size=(5, 5), strides=(2, 2), padding="same", use_bias=False),
+        layers.BatchNormalization(),
+        layers.LeakyReLU(),
+
+        layers.Conv2DTranspose(filters=32, kernel_size=(5, 5), strides=(2, 2), padding="same", use_bias=False),
+        layers.BatchNormalization(),
+        layers.LeakyReLU(),
+
+        layers.Conv2DTranspose(filters=3, kernel_size=(5, 5), strides=(2, 2), padding="same", use_bias=False,
+                               activation="tanh"),
+    ])
+```
+
+and here is the architecture of the Discriminator model for the first 3 cases:
+
+```python
+model = keras.Sequential([
+        layers.Conv2D(filters=64, kernel_size=(5, 5), strides=(2, 2), padding='same',
+                      input_shape=[IMG_SHAPE[0], IMG_SHAPE[1], N_CHANNELS]),
+        layers.LeakyReLU(),
+        layers.Dropout(rate=0.3),
+
+        layers.Conv2D(filters=128, kernel_size=(5, 5), strides=(2, 2), padding='same'),
+        layers.LeakyReLU(),
+        layers.Dropout(rate=0.3),
+
+        layers.Flatten(),
+        layers.Dense(units=1),
+    ])
+```
+
+Rest of model structure (as optimizer for example) can be view in the api/model.py file.
 
 ## Case 1
 This case uses the whole dataset that contains **5.000** logo samples. It iterates over **230.000** epochs with **256** batch size. The total execution time of this case is **6d 10h 39m 59s**.
